@@ -11,11 +11,15 @@ app.use(express.json());
 
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.hiysg.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`;
-
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 
-console.log(uri);
 
+
+console.log(uri);
+// const client = new MongoClient(uri, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// });
 
 
 
@@ -23,7 +27,7 @@ async function run() {
     try {
         await client.connect();
 
-        const database = client.db("carssale");
+        const database = client.db("grandEntry");
         const productCollection = database.collection("products");
         console.log('database connected')
         const orderCollection = database.collection("orders");
@@ -113,14 +117,11 @@ async function run() {
             res.json(approvedStatus);
         });
 
-
-
-
         // post api for user
         app.post("/users", async (req, res) => {
             const user = req.body;
             const result = await usersCollection.insertOne(user);
-            console.log(result);
+            // console.log(result);
             res.json(result);
         });
 
@@ -186,5 +187,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
-    console.log("hitting server @ ", port);
+    console.log("hitting", port);
 });
