@@ -70,11 +70,11 @@ async function run() {
 
         // delete api for my products
         app.delete("/products/:id", async (req, res) => {
-            const droneId = req.params.id;
-            const query = { _id: ObjectId(droneId) };
-            const deleteAnDrone = await productCollection.deleteOne(query);
+            const productId = req.params.id;
+            const query = { _id: ObjectId(productId) };
+            const deleteProduct = await productCollection.deleteOne(query);
             // console.log(deleteAnDrone);
-            res.json(deleteAnDrone);
+            res.json(deleteProduct);
         });
         // post api for  users
         app.post("/users", async (req, res) => {
