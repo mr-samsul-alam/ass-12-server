@@ -62,6 +62,21 @@ async function run() {
             // console.log(deleteAnDrone);
             res.json(deleteAnDrone);
         });
+        // post api for  users
+        app.post("/users", async (req, res) => {
+            const user = req.body;
+            const result = await usersCollection.insertOne(user);
+            // console.log("A document was inserted with the _id:", result);
+            res.json(result);
+        });
+        // get api for all order
+        app.get("/users", async (req, res) => {
+            const user = await usersCollection.find({}).toArray();
+            // console.log(manageorder);
+            res.send(user);
+        });
+
+
         // post api for place order
         app.post("/orders", async (req, res) => {
             const placeOrder = req.body;
