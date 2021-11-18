@@ -46,14 +46,28 @@ async function run() {
             res.send(allProducts);
         });
 
-        //get api for a single data
+        /* //get api for a single data
         app.get("/products/:id", async (req, res) => {
             const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const singleOrderInfo = await productCollection.findOne(query);
-            // console.log(singleOrderInfo);
+            console.log(req.params.id)
+            // const query = { _id: ObjectId(id) };
+            const singleOrderInfo = await productCollection.findOne(id);
+            console.log(singleOrderInfo);
             res.send(singleOrderInfo);
         });
+ */
+
+        // Get Single Service
+        app.get("/products/:id", async (req, res) => {
+            const id = req.params.id;
+            console.log(id)
+            const query = { _id: ObjectId(id) };
+            const products = await productCollection.findOne(query.id);
+            res.json(products);
+        });
+
+
+
         // delete api for my products
         app.delete("/products/:id", async (req, res) => {
             const droneId = req.params.id;
@@ -69,7 +83,7 @@ async function run() {
             // console.log("A document was inserted with the _id:", result);
             res.json(result);
         });
-        // get api for all order
+        // get api for users
         app.get("/users", async (req, res) => {
             const user = await usersCollection.find({}).toArray();
             // console.log(manageorder);
@@ -129,13 +143,6 @@ async function run() {
             res.json(approvedStatus);
         });
 
-        // post api for user
-        app.post("/users", async (req, res) => {
-            const user = req.body;
-            const result = await usersCollection.insertOne(user);
-            // console.log(result);
-            res.json(result);
-        });
 
         // put api for user
         app.put("/users", async (req, res) => {
@@ -166,7 +173,7 @@ async function run() {
             const email = req.params.email;
             const query = { email: email };
             const user = await usersCollection.findOne(query);
-            // console.log(user);
+            console.log(user);
             let isAdmin = false;
             if (user?.role === "admin") {
                 isAdmin = true;
